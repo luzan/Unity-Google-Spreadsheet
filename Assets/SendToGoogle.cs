@@ -21,9 +21,23 @@ public class SendToGoogle : MonoBehaviour {
         form.AddField("entry.1673653496", name);
         form.AddField("entry.1422402232", email);
         form.AddField("entry.1022174842", phone);
+        /*
+        ** Outdated
         byte[] rawData = form.data;
         WWW www = new WWW(BASE_URL, rawData);
         yield return www;
+        */
+        UnityWebRequest www = UnityWebRequest.Post(BASE_URL, form);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Form upload complete!");
+        }
     }
     public void Send() {
         Name = username.GetComponent<InputField>().text;
